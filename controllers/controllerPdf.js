@@ -4,25 +4,29 @@ const pdfFile = require("../model/pdfModel");
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
+//Upload handler
+//POST
 const pdfUpload = async (req, res) => {
   try {
-    const { originalname, buffer } = req.file;
+    const { originalname, buffer } = req.file; // deconstructing assignment 
     const newUpload = new pdfFile({
       name: originalname,
       data: buffer,
       verified: null,
     });
     await newUpload.save();
-    res.send("File uploaded successfully!" + newUpload);
+    res.status(201).send("File uploaded successfully!" + newUpload);
   } catch (err) {
     console.error("Error uploading file:", err);
     res.status(500).send("Error uploading file");
   }
 };
 
+//Download Handler
+//GET
 const downloadPdf = async (req, res) => {
   try {
-    const { filename } = req.params;
+    const { filename } = req.params;                         
     const file = await pdfFile.findOne({ name: filename });
     if (!file) {
       return res.status(404).send("File not found");
@@ -35,6 +39,8 @@ const downloadPdf = async (req, res) => {
   }
 };
 
+//Verify Handler
+//GET
 const verificationPdf = async (req, res) => {
   try {
     const { filename } = req.params;
@@ -50,6 +56,8 @@ const verificationPdf = async (req, res) => {
   }
 };
 
+//List Handler
+//PUT
 const getPdf = async (req, res) => {
   try {
     list = await pdfFile.find();

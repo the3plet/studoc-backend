@@ -12,9 +12,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/api/login", require("./route/login"));
-app.use("/api/pdf", require("./route/pdf"));
+app.use("/api/login", require("./route/login")); //auth route
+app.use("/api/pdf", require("./route/pdf")); //document route
 
 app.listen(PORT, () => {
-  console.log("Server Succussfully Started");
+  console.log(`Server started on ${PORT}`);
 });

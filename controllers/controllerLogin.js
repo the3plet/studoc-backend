@@ -1,7 +1,9 @@
+//Login Handler
+//POST
 const getLogin = async (req, res) => {
   const { username, password } = req.body;
   let role;
-  switch (username) {
+  switch (username) {  //based on username roles will be assigned
     case "student":
       role = "student";
       break;
@@ -19,7 +21,7 @@ const getLogin = async (req, res) => {
       break;
   }
   if (role) {
-    res.cookie("verified", role);
+    res.cookie("verified", role); //role assigned to cookie, for updating verification status
     res.json({ username: username, role: role });
   } else {
     res.json("user not found");
